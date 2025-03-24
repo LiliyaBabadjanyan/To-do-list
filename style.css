@@ -1,0 +1,449 @@
+/* Общие стили */
+body {
+    font-family: 'Times New Roman', Times, serif;
+    background-color: #C4BBBB;
+    margin: 0;
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.mainblock{
+    width: 900px;
+    background-color: #F8FCFF;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.header {
+    height: 450px;
+    width: 870px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    padding: 15px;
+    background-image: url(12937.png);
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    background-position: -150px -100px;
+}
+
+#current-date {
+    position: absolute;
+    left: 950px;
+    top: 450px;
+    color: #ffffff;
+    margin: 0;
+    font-size: 2em;
+}
+
+/* Стили календаря */
+.calendar {
+    background: white;
+    border-radius: 10px;
+    padding: 15px;
+    margin: 20px 0;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.calendar-header button {
+    background: none;
+    border: 1px solid #3498db;
+    color: #3498db;
+    padding: 8px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.calendar-header button:hover {
+    background: #3498db;
+    color: white;
+}
+
+#current-month {
+    color: #2c3e50;
+    margin: 0 15px;
+    text-align: center;
+}
+
+.calendar table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.calendar th, .calendar td {
+    padding: 8px;
+    text-align: center;
+    border: 1px solid #ecf0f1;
+    font-size: 0.9em;
+}
+
+.calendar th {
+    background: #3498db;
+    color: white;
+    font-weight: normal;
+}
+
+.current-day {
+    background: #3498db !important;
+    color: white !important;
+    border-radius: 3px;
+}
+
+.selected-day {
+    background: #2ecc71 !important;
+    color: white !important;
+    position: relative;
+}
+
+/* Индикаторы задач и заметок (постоянные) */
+.has-tasks::after {
+    content: '•';
+    position: absolute;
+    bottom: 2px;
+    right: 2px;
+    font-size: 20px;
+    color: #e74c3c;
+    opacity: 1;
+    visibility: visible;
+    z-index: 1;
+}
+
+.has-notes::before {
+    content: '•';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    font-size: 20px;
+    color: #f1c40f;
+    opacity: 1;
+    visibility: visible;
+    z-index: 1;
+}
+
+.calendar td {
+    position: relative;
+    min-width: 40px;
+    height: 40px;
+}
+
+.has-tasks::after, .has-notes::before {
+    pointer-events: none; /* Чтобы не мешали клику по ячейке */
+    transition: none; /* Убираем анимации */
+}
+
+/* Стили для задач */
+.task-input {
+    width: 50%;
+    display: flex;
+    gap: 10px;
+    margin: 25px 10px;
+}
+
+#task-text {
+    height: 27px;
+    flex: 1;
+    padding: 12px;
+    border: 2px solid #bdc3c7;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+button {
+    padding: 12px 25px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    opacity: 0.9;
+}
+
+
+.add-button {
+    background-color: #F8D3E4;
+    border: solid;
+    border-color: #E3F7F9;
+    box-shadow: 5px 5px 5px gray;
+    width: 80px;
+    height: 50px;
+}
+
+.task-list {
+    margin: 10px;
+    background: white;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    list-style: none;
+}
+
+.task-item {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    margin: 10px 0;
+    background: #f9f9f9;
+    border-radius: 8px;
+    transition: 0.3s;
+}
+
+.task-item:hover {
+    transform: translateX(5px);
+    box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+}
+
+.task-content {
+    flex: 1;
+    margin-left: 15px;
+}
+
+.task-date {
+    display: block;
+    font-size: 0.8em;
+    color: #7f8c8d;
+    margin-bottom: 3px;
+}
+
+.task-time {
+    font-size: 0.9em;
+    color: #3498db;
+    margin-right: 10px;
+}
+
+.task-actions {
+    display: flex;
+    gap: 8px;
+    margin-left: auto;
+}
+
+.edit-btn, .delete-btn {
+    padding: 8px 12px !important;
+    font-size: 14px !important;
+}
+
+.completed {
+    opacity: 0.6;
+    text-decoration: line-through;
+}
+
+/* Стили для завершенных задач */
+.completed-tasks {
+    margin: 10px;
+    margin-top: 30px;
+    background: #ffffff;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    border: 2px solid #000000;
+}
+
+.completed-tasks h2 {
+    color: #2f855a;
+    font-size: 1.2em;
+    margin: 0 0 15px 0;
+}
+
+/* Модальное окно */
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 999;
+}
+
+.modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 400px;
+    z-index: 1000;
+    box-shadow: 0 0 20px rgba(0,0,0,0.2);
+}
+
+.edit-title-input {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: 2px solid #bdc3c7;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+.edit-description-input {
+    width: 100%;
+    height: 100px;
+    padding: 10px;
+    margin: 10px 0;
+    border: 2px solid #bdc3c7;
+    border-radius: 8px;
+    resize: vertical;
+    font-size: 14px;
+}
+
+.time-picker {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 15px 0;
+}
+
+input[type="date"], 
+input[type="time"] {
+    padding: 8px;
+    border: 2px solid #bdc3c7;
+    border-radius: 8px;
+    font-family: 'Arial', sans-serif;
+    flex: 1;
+}
+
+.modal-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    margin-top: 20px;
+}
+
+.save-button {
+    background: #27ae60;
+    color: white;
+}
+
+.cancel-button {
+    background: #e74c3c;
+    color: white;
+}
+
+.time-set-button {
+    background: #3498db !important;
+    color: white !important;
+}
+
+/* Адаптивность */
+@media (max-width: 480px) {
+    .calendar-header {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .calendar th, 
+    .calendar td {
+        padding: 5px;
+        font-size: 0.8em;
+    }
+    
+    .task-item {
+        flex-wrap: wrap;
+        padding: 10px;
+    }
+    
+    .task-actions {
+        width: 100%;
+        justify-content: flex-end;
+        margin-top: 10px;
+    }
+    
+    input[type="date"], 
+    input[type="time"] {
+        width: 100%;
+    }
+}
+
+/* Календарь */
+.calendar {
+    background: white;
+    border-radius: 8px;
+    padding: 8px;
+    margin: 12px 0;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.calendar-header button {
+    padding: 4px 8px;
+    font-size: 12px;
+    min-width: 60px;
+}
+
+#current-month {
+    font-size: 14px;
+    margin: 0 8px;
+}
+
+.calendar table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+}
+
+.calendar th, .calendar td {
+    padding: 4px;
+    text-align: center;
+    border: 1px solid #eee;
+    min-width: 28px;
+    height: 28px;
+    position: relative;
+}
+
+/* Индикаторы */
+.has-tasks::after {
+    content: '•';
+    position: absolute;
+    bottom: 0;
+    right: 1px;
+    font-size: 14px;
+    color: #e74c3c;
+}
+
+.has-notes::before {
+    content: '•';
+    position: absolute;
+    top: 0;
+    left: 1px;
+    font-size: 14px;
+    color: #f1c40f;
+}
+
+/* Подсветка дней */
+.current-day {
+    background: #3498db !important;
+    color: white !important;
+}
+
+.selected-day {
+    background: #2ecc71 !important;
+    color: white !important;
+}
+
+.nado{
+    display: flex;
+    flex-direction: row;
+}

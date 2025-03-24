@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="./style.css" rel="stylesheet">
+    <title>Умный To-Do List</title>
+</head>
+<body>
+    <div class="mainblock">
+    <div class="main-screen">
+        <header class="header">
+            <h1 id="current-date"></h1>
+        </header>
+
+
+        <div class="nado">
+        <section class="task-input">
+            <input type="text" 
+                   id="task-text" 
+                   placeholder="Введите новую задачу..."
+                   aria-label="Поле ввода задачи">
+            <button type="button" 
+                    class="add-button"
+                    onclick="addTask()">
+                ➕
+            </button>
+        </section>
+        <section class="calendar">
+            <div class="calendar-header">
+                <button onclick="changeMonth(-1)">←</button>
+                <div>
+                    <h3 id="current-month"></h3>
+                    <button onclick="selectDate(new Date())">Сегодня</button>
+                </div>
+                <button onclick="changeMonth(1)">→</button>
+            </div>
+            <table id="calendar-table"></table>
+        </section>
+        </div>
+
+        <ul class="task-list" id="task-list" role="list"></ul>
+
+        <section class="completed-tasks">
+            <h2>✅ Завершенные задачи</h2>
+            <ul class="task-list" id="completed-list" role="list"></ul>
+        </section>
+    </div>
+
+    <div class="modal-backdrop" id="modal-backdrop" style="display: none;"></div>
+    
+    <div class="modal" id="edit-modal" style="display: none;">
+        <h2>✏️ Редактирование задачи</h2>
+        
+        <input type="text" 
+               id="edit-title" 
+               class="edit-title-input"
+               placeholder="Заголовок задачи"
+               aria-label="Заголовок задачи">
+        
+        <textarea id="edit-description" 
+                  rows="4"
+                  placeholder="Добавьте описание..."
+                  class="edit-description-input"></textarea>
+
+        <div class="time-picker">
+            <input type="date" 
+                   id="edit-date" 
+                   aria-label="Выбор даты"
+                   required>
+            <input type="time" 
+                   id="edit-time" 
+                   aria-label="Выбор времени">
+            <button type="button" 
+                    class="time-set-button"
+                    onclick="setCurrentDateTime()">
+                ⏰ Установить текущее
+            </button>
+        </div>
+        
+        <div class="modal-actions">
+            <button type="button" 
+                    class="save-button"
+                    onclick="saveChanges()">
+                💾 Сохранить
+            </button>
+            <button type="button" 
+                    class="cancel-button"
+                    onclick="closeModal()">
+                ❌ Отмена
+            </button>
+        </div>
+    </div>
+    <script src="main.js"></script>
+</div>
+</body>
+</html>

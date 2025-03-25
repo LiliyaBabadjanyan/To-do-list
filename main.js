@@ -16,7 +16,6 @@ function init() {
 function updateDateDisplay() {
     const dateElement = document.getElementById('current-date');
     dateElement.textContent = currentDate.toLocaleDateString('ru-RU', {
-        weekday: 'long',
         month: 'long',
         day: 'numeric'
     });

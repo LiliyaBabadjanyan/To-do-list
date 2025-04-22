@@ -485,11 +485,7 @@ input[type="time"] {
     margin-bottom: 8px;
 }
 
-.calendar-header button {
-    padding: 4px 8px;
-    font-size: 12px;
-    min-width: 60px;
-}
+
 
 #current-month {
     font-size: 14px;
@@ -587,4 +583,8 @@ input[type="time"] {
     margin: 0;
     font-size: 1.8em;
     color: white;
+}
+
+input[type="checkbox"] {
+    transform: scale(1.3);
 }

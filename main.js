@@ -12,7 +12,7 @@ function init() {
     setupEventListeners();
 }
 
-// Обновление отображения даты в шапке
+// Обновляет отображение текущей даты в заголовке
 function updateDateDisplay() {
     const dateElement = document.getElementById('current-date');
     dateElement.textContent = currentDate.toLocaleDateString('ru-RU', {
@@ -25,7 +25,7 @@ function updateDateDisplay() {
 function generateCalendar(date) {
     const calendarTable = document.getElementById('calendar-table');
     const monthYearElement = document.getElementById('current-month');
-    
+
     monthYearElement.textContent = date.toLocaleDateString('ru-RU', {
         month: 'long',
         year: 'numeric'
@@ -40,33 +40,29 @@ function generateCalendar(date) {
     const firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
     const lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
     let dayCounter = 1;
-
     let row = document.createElement('tr');
-    
-    // Заполнение пустых ячеек первого ряда
-    for (let i = 0; i < (firstDay.getDay() || 7); i++) {
-        if (i < 6) row.appendChild(document.createElement('td'));
+
+    // Заполнение пустых ячеек перед началом месяца
+    for (let i = 0; i < (firstDay.getDay() || 7) - 1; i++) {
+        row.appendChild(document.createElement('td'));
     }
 
     while (dayCounter <= lastDay.getDate()) {
         const cell = document.createElement('td');
         const cellDate = new Date(date.getFullYear(), date.getMonth(), dayCounter);
-        
+
         cell.textContent = dayCounter;
         cell.dataset.date = cellDate.toISOString();
         cell.onclick = () => selectDate(cellDate);
 
-        // Подсветка текущего дня
         if (isSameDay(cellDate, new Date())) {
             cell.classList.add('current-day');
         }
 
-        // Подсветка выбранного дня
         if (selectedDate && isSameDay(cellDate, selectedDate)) {
             cell.classList.add('selected-day');
         }
 
-        // Индикатор задач
         if (hasTasksForDate(cellDate)) {
             cell.classList.add('has-tasks');
         }
@@ -77,9 +73,10 @@ function generateCalendar(date) {
             calendarTable.appendChild(row);
             row = document.createElement('tr');
         }
+
         dayCounter++;
     }
-    
+
     if (row.children.length > 0) {
         calendarTable.appendChild(row);
     }
@@ -89,15 +86,18 @@ function generateCalendar(date) {
 function addTask() {
     const taskInput = document.getElementById('task-text');
     const text = taskInput.value.trim();
-    
+
     if (text) {
+        const dateToUse = selectedDate ? new Date(selectedDate) : new Date();
+
         tasks.push({
             text: text,
             completed: false,
             time: null,
-            date: new Date().toISOString(),
+            date: dateToUse.toISOString(),
             notes: ''
         });
+
         taskInput.value = '';
         saveToLocalStorage();
         renderTasks();
@@ -111,48 +111,48 @@ function editTask(index) {
     const task = tasks[index];
     const [title, ...descriptionParts] = task.text.split('\n');
     const taskDate = new Date(task.date);
-    
+
     document.getElementById('edit-title').value = title;
     document.getElementById('edit-description').value = descriptionParts.join('\n');
-    document.getElementById('edit-time').value = task.time || '';
     document.getElementById('edit-date').value = taskDate.toISOString().split('T')[0];
+    document.getElementById('edit-time').value = task.time || '';
     showModal();
 }
 
-// Сохранение изменений
+// Сохранение изменений задачи
 function saveChanges() {
     if (editingIndex > -1) {
         const title = document.getElementById('edit-title').value.trim();
         const description = document.getElementById('edit-description').value.trim();
         const newDate = document.getElementById('edit-date').value;
         const newTime = document.getElementById('edit-time').value;
-        
+
         tasks[editingIndex].text = title + (description ? '\n' + description : '');
         tasks[editingIndex].time = newTime;
         tasks[editingIndex].date = new Date(newDate).toISOString();
-        
+
         saveToLocalStorage();
         renderTasks();
         generateCalendar(currentDate);
+        closeModal();
     }
-    closeModal();
 }
 
-// Отображение задач
+// Отображение задач (по выбранной или текущей дате)
 function renderTasks() {
     const taskList = document.getElementById('task-list');
     const completedList = document.getElementById('completed-list');
     taskList.innerHTML = '';
     completedList.innerHTML = '';
-    
+
     const targetDate = selectedDate || currentDate;
-    
+
     tasks.forEach((task, index) => {
         if (!isSameDay(new Date(task.date), targetDate)) return;
-        
+
         const title = task.text.split('\n')[0];
         const list = task.completed ? completedList : taskList;
-        
+
         const li = document.createElement('li');
         li.className = `task-item ${task.completed ? 'completed' : ''}`;
         li.innerHTML = `
@@ -160,9 +160,7 @@ function renderTasks() {
                    ${task.completed ? 'checked' : ''} 
                    onchange="toggleTask(${index})">
             <div class="task-content">
-                ${task.date ? `<span class="task-date">
-                    ${new Date(task.date).toLocaleDateString('ru-RU')}
-                </span>` : ''}
+                ${task.date ? `<span class="task-date">${new Date(task.date).toLocaleDateString('ru-RU')}</span>` : ''}
                 ${task.time ? `<span class="task-time">${task.time}</span>` : ''}
                 <span class="task-title">${title}</span>
             </div>
@@ -171,6 +169,7 @@ function renderTasks() {
                 <button class="delete-btn" onclick="deleteTask(${index})">🗑️</button>
             </div>
         `;
+
         list.appendChild(li);
     });
 }

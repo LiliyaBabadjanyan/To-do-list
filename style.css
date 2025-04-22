@@ -30,14 +30,7 @@ body {
     background-position: -150px -100px;
 }
 
-#current-date {
-    top: 32%;
-    left: 83%;
-    position: absolute;
-    color: #ffffff;
-    margin: 0;
-    font-size: 2em;
-}
+
 
 /* Стили календаря */
 .calendar {
@@ -145,10 +138,10 @@ body {
 /* Стили для задач */
 .task-input {
     height: 50%;
-    width: 60%;
+    width: 95%;
     display: flex;
     gap: 10px;
-    margin: 25px 10px;
+    margin: 25px 10px 15px 10px;
 }
 
 #task-text {
@@ -343,35 +336,135 @@ input[type="time"] {
     color: white !important;
 }
 
-/* Адаптивность */
 @media (max-width: 480px) {
+    /* Контейнер: календарь сверху, задача снизу */
+    .task-calendar-container {
+        flex-direction: column-reverse;
+        gap: 16px;
+        margin: 10px;
+    }
+
+    /* Ввод задачи во всю ширину */
+    .task-input {
+        gap: 8px;
+        margin: 10px 0;
+        width: 100%;
+    }
+
+    #task-text {
+        width: 100%;
+        padding: 10px;
+        font-size: 16px;
+        border-radius: 6px;
+    }
+
+    .add-button {
+        padding: 10px;
+        font-size: 16px;
+        border-radius: 6px;
+    }
+
+    /* Календарь адаптирован */
+    .calendar {
+        width: 100%;
+        padding: 10px;
+    }
+
     .calendar-header {
+        flex-direction: column;
+        gap: 8px;
+        align-items: center;
+    }
+
+    .calendar-header button {
+        width: 100%;
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    .calendar table {
+        font-size: 13px;
+    }
+
+    /* Активные задачи */
+    .task-list {
+        margin: 10px 0;
+        padding: 10px;
+        border-radius: 8px;
+    }
+
+    .task-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+        padding: 10px;
+        margin: 6px 0;
+    }
+
+    .task-actions {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    /* Завершённые задачи */
+    .completed-tasks {
+        margin: 10px 0;
+        padding: 10px;
+    }
+
+    /* Модальное окно адаптировано */
+    .modal {
+        width: 95%;
+        padding: 15px;
+    }
+
+    .edit-title-input,
+    .edit-description-input,
+    .time-picker input {
+        width: 100%;
+        font-size: 15px;
+        padding: 10px;
+    }
+
+    .time-set-button {
+        width: 100%;
+        padding: 10px;
+    }
+
+    .modal-actions {
         flex-direction: column;
         gap: 10px;
     }
-    
-    .calendar th, 
-    .calendar td {
-        padding: 5px;
-        font-size: 0.8em;
-    }
-    
-    .task-item {
-        flex-wrap: wrap;
+
+    .save-button,
+    .cancel-button {
+        width: 100%;
         padding: 10px;
+        font-size: 16px;
+    }
+
+    .task-column {
+        margin: auto;
+        width: 90%;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+    #current-date {
+        font-size: 1.4em;
     }
     
-    .task-actions {
+    .header {
         width: 100%;
+        height: 200px;
+        background-position: center;
+        padding: 10px;
         justify-content: flex-end;
-        margin-top: 10px;
+        align-items: flex-end;
     }
     
-    input[type="date"], 
-    input[type="time"] {
-        width: 100%;
-    }
 }
+
 
 /* Календарь */
 .calendar {
@@ -448,16 +541,50 @@ input[type="time"] {
     color: white !important;
 }
 
-.nado{
-    display: flex;
-    flex-direction: row;
-}
 
-.linia{
-    margin: 10px;
-    position: absolute;
-    top: 600px;
-    width: 550px;
+.linia {
+    margin: 10px auto;
+    width: 90%;
     height: 1px;
     background-color: #F8D3E4;
+}
+
+.task-calendar-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    margin: 20px;
+    align-items: flex-start;
+}
+
+.task-column {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    position: relative;
+    height: 450px;
+    width: 870px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    padding: 15px;
+    background-image: url(12937.png);
+    border-radius: 10px;
+    background-position: -150px -100px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.date-container {
+    position: relative;
+    padding: 10px 15px;
+    border-radius: 8px;
+}
+
+#current-date {
+    margin: 0;
+    font-size: 1.8em;
+    color: white;
 }

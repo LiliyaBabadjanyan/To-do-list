@@ -232,6 +232,7 @@ function toggleTask(index) {
     tasks[index].completedDate = tasks[index].completed ? new Date().toISOString() : null;
     saveToLocalStorage();
     renderTasks();
+    generateCalendar(currentDate); // 🔁 чтобы обновить кружки в календаре
 }
 
 // Локальное хранилище

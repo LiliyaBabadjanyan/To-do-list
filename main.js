@@ -64,9 +64,7 @@ function generateCalendar(date) {
         }
 
         if (hasTasksForDate(cellDate)) {
-            return tasks.some(task =>
-                isSameDay(new Date(task.date), date) && !task.completed
-            );
+            cell.classList.add('has-tasks');
         }
 
         row.appendChild(cell);
@@ -184,7 +182,9 @@ function isSameDay(d1, d2) {
 }
 
 function hasTasksForDate(date) {
-    return tasks.some(task => isSameDay(new Date(task.date), date));
+    return tasks.some(task =>
+        isSameDay(new Date(task.date), date) && !task.completed
+    );
 }
 
 function selectDate(date) {

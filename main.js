@@ -62,11 +62,8 @@ function generateCalendar(date) {
         if (selectedDate && isSameDay(cellDate, selectedDate)) {
             cell.classList.add('selected-day');
         }
-
         if (hasTasksForDate(cellDate)) {
-            return tasks.some(task =>
-                isSameDay(new Date(task.date), date) && !task.completed
-            );
+            cell.classList.add('has-tasks');
         }
 
         row.appendChild(cell);

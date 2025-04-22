@@ -126,9 +126,20 @@ function saveChanges() {
         const newDate = document.getElementById('edit-date').value;
         const newTime = document.getElementById('edit-time').value;
 
+        // 🧠 Защита от пустой даты
+        let finalDate = tasks[editingIndex].date; // по умолчанию — старая дата
+        if (newDate) {
+            // Создаём дату в локальной временной зоне
+            const parts = newDate.split('-'); // [2025, 04, 09]
+            const year = parseInt(parts[0], 10);
+            const month = parseInt(parts[1], 10) - 1; // месяц с нуля
+            const day = parseInt(parts[2], 10);
+            finalDate = new Date(year, month, day).toISOString();
+        }
+
         tasks[editingIndex].text = title + (description ? '\n' + description : '');
         tasks[editingIndex].time = newTime;
-        tasks[editingIndex].date = new Date(newDate).toISOString();
+        tasks[editingIndex].date = finalDate;
 
         saveToLocalStorage();
         renderTasks();

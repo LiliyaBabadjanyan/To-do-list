@@ -12,7 +12,6 @@ function init() {
     setupEventListeners();
 }
 
-// Обновляет отображение текущей даты в заголовке
 function updateDateDisplay() {
     const dateElement = document.getElementById('current-date');
     dateElement.textContent = currentDate.toLocaleDateString('ru-RU', {
@@ -21,7 +20,6 @@ function updateDateDisplay() {
     });
 }
 
-// Генерация календаря
 function generateCalendar(date) {
     const calendarTable = document.getElementById('calendar-table');
     const monthYearElement = document.getElementById('current-month');
@@ -42,7 +40,6 @@ function generateCalendar(date) {
     let dayCounter = 1;
     let row = document.createElement('tr');
 
-    // Заполнение пустых ячеек перед началом месяца
     for (let i = 0; i < (firstDay.getDay() || 7) - 1; i++) {
         row.appendChild(document.createElement('td'));
     }
@@ -81,7 +78,6 @@ function generateCalendar(date) {
     }
 }
 
-// Добавление новой задачи
 function addTask() {
     const taskInput = document.getElementById('task-text');
     const text = taskInput.value.trim();
@@ -104,7 +100,6 @@ function addTask() {
     }
 }
 
-// Редактирование задачи
 function editTask(index) {
     editingIndex = index;
     const task = tasks[index];
@@ -113,12 +108,11 @@ function editTask(index) {
 
     document.getElementById('edit-title').value = title;
     document.getElementById('edit-description').value = descriptionParts.join('\n');
-    document.getElementById('edit-date').value = taskDate.toISOString().split('T')[0];
+    document.getElementById('edit-date').value = formatDateLocal(taskDate);
     document.getElementById('edit-time').value = task.time || '';
     showModal();
 }
 
-// Сохранение изменений задачи
 function saveChanges() {
     if (editingIndex > -1) {
         const title = document.getElementById('edit-title').value.trim();
@@ -126,13 +120,11 @@ function saveChanges() {
         const newDate = document.getElementById('edit-date').value;
         const newTime = document.getElementById('edit-time').value;
 
-        // 🧠 Защита от пустой даты
-        let finalDate = tasks[editingIndex].date; // по умолчанию — старая дата
+        let finalDate = tasks[editingIndex].date;
         if (newDate) {
-            // Создаём дату в локальной временной зоне
-            const parts = newDate.split('-'); // [2025, 04, 09]
+            const parts = newDate.split('-');
             const year = parseInt(parts[0], 10);
-            const month = parseInt(parts[1], 10) - 1; // месяц с нуля
+            const month = parseInt(parts[1], 10) - 1;
             const day = parseInt(parts[2], 10);
             finalDate = new Date(year, month, day).toISOString();
         }
@@ -148,7 +140,6 @@ function saveChanges() {
     }
 }
 
-// Отображение задач (по выбранной или текущей дате)
 function renderTasks() {
     const taskList = document.getElementById('task-list');
     const completedList = document.getElementById('completed-list');
@@ -184,11 +175,10 @@ function renderTasks() {
     });
 }
 
-// Вспомогательные функции
 function isSameDay(d1, d2) {
     return d1.getFullYear() === d2.getFullYear() &&
-           d1.getMonth() === d2.getMonth() &&
-           d1.getDate() === d2.getDate();
+        d1.getMonth() === d2.getMonth() &&
+        d1.getDate() === d2.getDate();
 }
 
 function hasTasksForDate(date) {
@@ -212,11 +202,17 @@ function changeMonth(offset) {
 
 function setCurrentDateTime() {
     const now = new Date();
-    document.getElementById('edit-date').value = now.toISOString().split('T')[0];
+    document.getElementById('edit-date').value = formatDateLocal(now);
     document.getElementById('edit-time').value = now.toTimeString().slice(0, 5);
 }
 
-// Работа с модальным окном
+function formatDateLocal(date) {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+}
+
 function showModal() {
     document.getElementById('modal-backdrop').style.display = 'block';
     document.getElementById('edit-modal').style.display = 'block';
@@ -228,7 +224,6 @@ function closeModal() {
     editingIndex = -1;
 }
 
-// Управление задачами
 function deleteTask(index) {
     if (confirm('Удалить задачу?')) {
         tasks.splice(index, 1);
@@ -243,15 +238,13 @@ function toggleTask(index) {
     tasks[index].completedDate = tasks[index].completed ? new Date().toISOString() : null;
     saveToLocalStorage();
     renderTasks();
-    generateCalendar(currentDate); // 🔁 чтобы обновить кружки в календаре
+    generateCalendar(currentDate);
 }
 
-// Локальное хранилище
 function saveToLocalStorage() {
     localStorage.setItem('tasks', JSON.stringify(tasks));
 }
 
-// Обработчики событий
 function setupEventListeners() {
     document.getElementById('modal-backdrop').addEventListener('click', closeModal);
     document.getElementById('task-text').addEventListener('keypress', e => {

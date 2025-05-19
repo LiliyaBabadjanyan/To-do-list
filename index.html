@@ -22,8 +22,8 @@
                 <!-- Левая колонка: поле + список задач -->
                 <div class="task-column">
                     <section class="task-input">
-                        <input type="text" 
-                               id="task-text" 
+                        <input type="text"
+                               id="task-text"
                                placeholder="Введите новую задачу..."
                                aria-label="Поле ввода задачи">
                         <button type="button" 
@@ -31,9 +31,22 @@
                                 onclick="addTask()">
                             ➕
                         </button>
+                        <select id="task-category" aria-label="Категория задачи">
+                            <option value="">Без категории</option>
+                            <option value="work">Работа</option>
+                            <option value="personal">Личное</option>
+                            <option value="study">Учёба</option>
+                        </select>
+
                     </section>
 
                     <div class="linia"></div>
+                    <select id="filter-category" onchange="renderTasks()" aria-label="Фильтр по категории">
+                        <option value="">Все категории</option>
+                        <option value="work">Работа</option>
+                        <option value="personal">Личное</option>
+                        <option value="study">Учёба</option>
+                    </select>
 
                     <ul class="task-list" id="task-list" role="list"></ul>
                 </div>
@@ -54,7 +67,7 @@
 
             <!-- Завершённые задачи -->
             <section class="completed-tasks">
-                <h2>✅ Завершенные задачи</h2>
+                <h2>Завершенные задачи</h2>
                 <ul class="task-list" id="completed-list" role="list"></ul>
             </section>
         </div>
@@ -74,6 +87,12 @@
                       rows="4"
                       placeholder="Добавьте описание..." 
                       class="edit-description-input"></textarea>
+            <select id="edit-category" aria-label="Категория">
+                <option value="">Без категории</option>
+                <option value="work">Работа</option>
+                <option value="personal">Личное</option>
+                <option value="study">Учёба</option>
+            </select>
             <div class="time-picker">
                 <input type="date" id="edit-date" aria-label="Выбор даты" required>
                 <input type="time" id="edit-time" aria-label="Выбор времени">

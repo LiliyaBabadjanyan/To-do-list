@@ -81,6 +81,8 @@ function generateCalendar(date) {
 function addTask() {
     const taskInput = document.getElementById('task-text');
     const text = taskInput.value.trim();
+    const category = document.getElementById('task-category').value;
+
 
     if (text) {
         const dateToUse = selectedDate ? new Date(selectedDate) : new Date();
@@ -88,6 +90,7 @@ function addTask() {
         tasks.push({
             text: text,
             completed: false,
+            category: category,
             time: null,
             date: dateToUse.toISOString(),
             notes: ''
@@ -110,6 +113,7 @@ function editTask(index) {
     document.getElementById('edit-description').value = descriptionParts.join('\n');
     document.getElementById('edit-date').value = formatDateLocal(taskDate);
     document.getElementById('edit-time').value = task.time || '';
+    document.getElementById('edit-category').value = task.category || '';
     showModal();
 }
 
@@ -117,6 +121,7 @@ function saveChanges() {
     if (editingIndex > -1) {
         const title = document.getElementById('edit-title').value.trim();
         const description = document.getElementById('edit-description').value.trim();
+        const newCategory = document.getElementById('edit-category').value;
         const newDate = document.getElementById('edit-date').value;
         const newTime = document.getElementById('edit-time').value;
 
@@ -132,11 +137,20 @@ function saveChanges() {
         tasks[editingIndex].text = title + (description ? '\n' + description : '');
         tasks[editingIndex].time = newTime;
         tasks[editingIndex].date = finalDate;
+        tasks[editingIndex].category = newCategory;
 
         saveToLocalStorage();
         renderTasks();
         generateCalendar(currentDate);
         closeModal();
+    }
+}
+function formatCategory(category) {
+    switch (category) {
+        case 'work': return 'Работа';
+        case 'personal': return 'Личное';
+        case 'study': return 'Учёба';
+        default: return category;
     }
 }
 
@@ -147,9 +161,12 @@ function renderTasks() {
     completedList.innerHTML = '';
 
     const targetDate = selectedDate || currentDate;
+    const selectedCategory = document.getElementById('filter-category')?.value || '';
 
     tasks.forEach((task, index) => {
         if (!isSameDay(new Date(task.date), targetDate)) return;
+        if (selectedCategory && task.category !== selectedCategory) return;
+
 
         const title = task.text.split('\n')[0];
         const list = task.completed ? completedList : taskList;
@@ -163,6 +180,7 @@ function renderTasks() {
             <div class="task-content">
                 ${task.date ? `<span class="task-date">${new Date(task.date).toLocaleDateString('ru-RU')}</span>` : ''}
                 ${task.time ? `<span class="task-time">${task.time}</span>` : ''}
+                ${task.category ? `<span class="task-category ${task.category}">${formatCategory(task.category)}</span>` : ''}
                 <span class="task-title">${title}</span>
             </div>
             <div class="task-actions">

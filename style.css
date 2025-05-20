@@ -166,14 +166,9 @@ button:hover {
 }
 
 
-.add-button {
-    background-color: #F8D3E4;
-    border: solid;
-    border-color: #E3F7F9;
-    box-shadow: 5px 5px 5px gray;
-    width: 80px;
-    height: 50px;
-}
+
+
+
 
 .task-list {
     margin: 10px;
@@ -633,5 +628,11 @@ select#edit-category {
     font-size: 16px;
 }
 
-user agent stylesheet
-s
+.add-button {
+    background-color: #F8D3E4;
+    border: solid;
+    border-color: #ffffff;
+    box-shadow: 2px 2px 2px gray;
+    width: 80px;
+    height: 50px;
+}
